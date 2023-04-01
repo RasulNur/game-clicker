@@ -1,38 +1,98 @@
-.App {
-  text-align: center;
+.app__row {
+    margin: 100px auto 0;
+    max-width: 615px;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app__btns {
+    grid-area: btns;
+    display: flex;
+    gap: 15px;
+    justify-self: center;
+}
+.app__btn {
+    border: none;
+    padding: 5px 20px;
+    cursor: pointer;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.app__player-bar {
+    grid-area: p-bar;
+}
+.app__bar-wrapper {
+    position: relative;
+}
+.app_score-bar {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #d9d9d9;
+}
+.app_score-bar::-webkit-slider-runnable-track {
+    height: 20px;
+    -webkit-appearance: none;
+    margin-top: -1px;
+}
+.app_score-bar::-webkit-slider-thumb {
+    width: 1px;
+    -webkit-appearance: none;
+    height: 20px;
+}
+.app__bar-text {
+    position: absolute;
+    bottom: -115px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.app__board {
+    grid-area: board;
+}
+.board__square {
+    border: 1px solid #000;
+    background-color: #d9d9d9;
 }
 
-.App-link {
-  color: #61dafb;
+.app__pc-bar {
+    grid-area: pc-bar;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.app__timer-bar-wrapper {
+    grid-area: time-bar;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+.app__time-bar {
+    height: 20px;
+    width: 100%;
+}
+.app__timer-icon {
+    width: 20px;
+    height: 20px;
+}
+.app__money-icon {
+    width: 40px;
+    height: 40px;
+}
+.app__time-bar input[type="range"] {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #d9d9d9;
+}
+.app__time-bar input[type="range"]::-webkit-slider-runnable-track {
+    height: 20px;
+    -webkit-appearance: none;
+    margin-top: -1px;
+}
+.app__time-bar input[type="range"]::-webkit-slider-thumb {
+    width: 1px;
+    -webkit-appearance: none;
+    height: 20px;
 }
