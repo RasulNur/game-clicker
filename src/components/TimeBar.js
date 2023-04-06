@@ -3,13 +3,14 @@ import styled from "styled-components";
 import { context } from "../context";
 
 const TimeBar = () => {
-    const { time, setTime, setIsPlaying } = useContext(context);
+    const { time, setTime, setIsPlaying, isPlaying } = useContext(context);
     const colors = { red: "#ff8e77", green: "#adff77", yellow: "#ffd977" };
     useEffect(() => {
         let interval = setInterval(() => {
-            if (time >= 1 && time <= 60) {
+            if (isPlaying && time >= 0 && time <= 60) {
                 setTime(time - 1);
-                setIsPlaying(true);
+
+                // setIsPlaying(true);
             } else if (time < 1) {
                 setIsPlaying(false);
             }
@@ -17,7 +18,7 @@ const TimeBar = () => {
         return () => {
             clearInterval(interval);
         };
-    }, [time]);
+    }, [time, isPlaying]);
 
     const Input = styled.input.attrs({
         type: "range",

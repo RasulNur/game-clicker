@@ -8,17 +8,26 @@ import ScoreBar from "./components/ScoreBar";
 import Button from "./components/Button";
 
 function App() {
-    const { board, scorePC, scoreUser, winMessage } = useContext(context);
+    const { board, scorePC, scoreUser, winMessage, isPlaying, setIsPlaying } =
+        useContext(context);
 
     const rowStyles = {
-        gridTemplateAreas: `". btns btns ."
+        gridTemplateAreas: `
+				". start-btn start-btn ."
+				". btns btns ."
 				"p-bar  board board pc-bar"
 				"time-bar time-bar time-bar time-bar"`,
     };
     const rowStyles60 = {
-        gridTemplateAreas: `"p-bar btns btns pc-bar"
+        gridTemplateAreas: `
+		". start-btn start-btn ."
+		"p-bar btns btns pc-bar"
 		"board  board board board"
 		"time-bar time-bar time-bar time-bar"`,
+    };
+
+    const handlePlay = () => {
+        setIsPlaying(true);
     };
 
     return (
@@ -26,6 +35,9 @@ function App() {
             <div
                 className="app__row"
                 style={board.length === 60 ? rowStyles60 : rowStyles}>
+                <button className="app__start-btn" onClick={handlePlay}>
+                    Start
+                </button>
                 <div className="app__btns">
                     <Button boardSize={16} text={"Easy"} />
                     <Button boardSize={36} text={"Medium"} />

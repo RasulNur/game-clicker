@@ -7,6 +7,13 @@
     gap: 40px;
 }
 
+.app__start-btn {
+    grid-area: start-btn;
+    border: none;
+    padding: 5px 20px;
+    cursor: pointer;
+}
+
 .app__btns {
     grid-area: btns;
     display: flex;

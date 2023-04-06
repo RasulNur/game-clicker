@@ -14,6 +14,10 @@ const Board = () => {
         setBoardTimer,
         setIsClicked,
         handleWinDetect,
+        setScorePC,
+        setScoreUser,
+        intervalMin,
+        intervalMax,
     } = useContext(context);
 
     const boardStyles = {
@@ -28,38 +32,39 @@ const Board = () => {
         return time >= 0 ? Math.floor(Math.random() * board.length) : null;
     };
 
-    const handleRandomTime = (min, max) => {
-        setBoardTimer(Math.floor(Math.random() * (max - min) + min * 1000));
+    const handleRandom = (max, min) => {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    };
 
-        return boardTimer;
+    const handleRandomTime = () => {
+        setBoardTimer(handleRandom(intervalMax, intervalMin));
     };
 
     useEffect(() => {
-        setRandomN(1);
-        const interval = setInterval(
-            () => {
+        const interval = setInterval(() => {
+            handleWinDetect();
+            handleRandomTime();
+
+            if (isPlaying) {
+                setIsClicked(false);
+                setRandomN((prev) => ({
+                    prev: prev.curr,
+                    curr: handleRandomPostion(),
+                }));
+
                 handleWinDetect();
-
-                if (isPlaying) {
-                    setIsClicked(false);
-                    setRandomN(handleRandomPostion());
-                    handleWinDetect();
-                } else {
-                    setRandomN(null);
-                    clearInterval(interval);
-                }
-            },
-            board.length === 60
-                ? handleRandomTime(0.5, 2)
-                : board.length === 36
-                ? handleRandomTime(1, 3)
-                : handleRandomTime(2, 5)
-        );
-
+                console.log(boardTimer);
+            } else {
+                setRandomN({ prev: null, curr: null });
+                clearInterval(interval);
+                setScorePC(0);
+                setScoreUser(0);
+            }
+        }, boardTimer);
         return () => {
             clearInterval(interval);
         };
-    }, [isPlaying]);
+    }, [isPlaying, board.length, boardTimer]);
 
     return (
         <div className="app__board board" style={boardStyles}>
@@ -70,7 +75,7 @@ const Board = () => {
                         key={i}
                         type="button"
                         onClick={() => handleHitClick(i)}>
-                        {randomN === i ? (
+                        {randomN.curr === i ? (
                             <img
                                 className="app__money-icon"
                                 src={MoneyIcon}

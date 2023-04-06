@@ -12,10 +12,25 @@ const Button = ({ boardSize, text }) => {
         setIsClicked,
         setIsHitted,
         setWinMessage,
+        setRandomN,
+
+        setIntervalMin,
+        setIntervalMax,
     } = useContext(context);
 
     const handleClickLevel = (boardSize) => {
         handleBoardSize(boardSize);
+
+        if (boardSize === 16) {
+            setIntervalMin(1000);
+            setIntervalMax(1500);
+        } else if (boardSize === 36) {
+            setIntervalMin(500);
+            setIntervalMax(1200);
+        } else if (boardSize === 60) {
+            setIntervalMin(400);
+            setIntervalMax(1000);
+        }
         setIsPlaying(false);
         setTime(60);
         setIsHitted(false);
@@ -23,10 +38,7 @@ const Button = ({ boardSize, text }) => {
         setIsWin({ whoWin: "", bool: false });
         setScorePC(0);
         setScoreUser(0);
-        setTimeout(() => {
-            setIsPlaying(true);
-        }, 10);
-
+        setRandomN({ prev: null, curr: null });
         setWinMessage(null);
     };
 

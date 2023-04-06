@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { context } from "../context";
 
 const ScoreBar = ({ score, text, color }) => {
-    const { board } = useContext(context);
+    const { board, maxScore } = useContext(context);
 
     const appBarStyles = {
         transform: `${board.length === 60 ? "" : "rotate(-90deg)"}`,
@@ -19,7 +19,7 @@ const ScoreBar = ({ score, text, color }) => {
     const ScoreInput = styled.input.attrs({
         type: "range",
         min: 0,
-        max: 30,
+        max: maxScore,
         defaultValue: score,
         disabled: true,
         className: "app_score-bar",
