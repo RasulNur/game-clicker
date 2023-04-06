@@ -13,17 +13,24 @@ function App() {
 
     const rowStyles = {
         gridTemplateAreas: `
-				". start-btn start-btn ."
-				". btns btns ."
-				"p-bar  board board pc-bar"
-				"time-bar time-bar time-bar time-bar"`,
+		". . . start-btn start-btn . . ."
+		". btns btns btns btns btns btns ."
+		". p-bar board board board board pc-bar ."
+		". time-bar time-bar time-bar time-bar time-bar time-bar ."`,
     };
-    const rowStyles60 = {
+    const rowStyles36 = {
         gridTemplateAreas: `
-		". start-btn start-btn ."
-		"p-bar btns btns pc-bar"
-		"board  board board board"
-		"time-bar time-bar time-bar time-bar"`,
+		". . . start-btn start-btn . . ."
+				". btns btns btns btns btns btns ."
+				"p-bar board board board board board board pc-bar"
+				". time-bar time-bar time-bar time-bar time-bar time-bar ."`,
+    };
+
+    const rowStyles60 = {
+        gridTemplateAreas: `". . . start-btn start-btn . . ."
+				"p-bar p-bar btns btns btns btns pc-bar pc-bar"
+				"board  board board board board  board board board"
+				"time-bar time-bar time-bar time-bar time-bar time-bar time-bar time-bar"`,
     };
 
     const handlePlay = () => {
@@ -34,7 +41,13 @@ function App() {
         <div className="app">
             <div
                 className="app__row"
-                style={board.length === 60 ? rowStyles60 : rowStyles}>
+                style={
+                    board.length === 60
+                        ? rowStyles60
+                        : board.length === 36
+                        ? rowStyles36
+                        : rowStyles
+                }>
                 <button className="app__start-btn" onClick={handlePlay}>
                     Start
                 </button>
@@ -43,19 +56,13 @@ function App() {
                     <Button boardSize={36} text={"Medium"} />
                     <Button boardSize={60} text={"Hard"} />
                 </div>
-                <div className="app__player-bar">
-                    <ScoreBar
-                        score={scoreUser}
-                        text={"You"}
-                        color={"#b4ffb2"}
-                    />
-                </div>
 
-                <Board />
-
-                <div className="app__pc-bar">
-                    <ScoreBar score={scorePC} text={"PC"} color={"#ff8989"} />
+                <ScoreBar score={scoreUser} text={"You"} color={"#b4ffb2"} />
+                <div className="app__board-wrapper">
+                    <Board />
                 </div>
+                <ScoreBar score={scorePC} text={"PC"} color={"#ff8989"} />
+
                 <div className="app__timer-bar-wrapper">
                     <img
                         src={TimerIcon}

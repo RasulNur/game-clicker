@@ -7,13 +7,15 @@ const ScoreBar = ({ score, text, color }) => {
 
     const appBarStyles = {
         transform: `${board.length === 60 ? "" : "rotate(-90deg)"}`,
+        width: `${board.length === 60 ? "" : "width: 230px"}`,
+        justifySelf: "center",
     };
-
-    const appBarTextStylesUser = {
-        left: "83px",
-    };
-    const appBarTextStylesPC = {
-        right: "86px",
+    const appWrapperStyles = {
+        display: "flex",
+        flexDirection: "row-reverse",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: "10px",
     };
 
     const ScoreInput = styled.input.attrs({
@@ -25,7 +27,7 @@ const ScoreBar = ({ score, text, color }) => {
         className: "app_score-bar",
     })`
         width: ${board.length === 60 ? "" : "190px"};
-        height: ${board.length === 60 ? "30px" : "30px"};
+        height: 30px;
 
         &::-webkit-slider-thumb {
             box-shadow: -100px 0 0 100px ${color};
@@ -33,23 +35,21 @@ const ScoreBar = ({ score, text, color }) => {
     `;
 
     return (
-        <div className="app__bar-wrapper">
-            <div className="app__bar" style={appBarStyles}>
-                <ScoreInput />
-            </div>
-            {board.length !== 60 ? (
-                <div
-                    className="app__bar-text"
-                    style={
-                        text === "You"
-                            ? appBarTextStylesUser
-                            : appBarTextStylesPC
-                    }>
-                    {text}
+        <div
+            className={text === "You" ? "app__player-bar" : "app__pc-bar"}
+            style={appBarStyles}>
+            <div
+                className="app__bar-wrapper"
+                style={board.length !== 60 ? appWrapperStyles : null}>
+                <div className="app__bar">
+                    <ScoreInput />
                 </div>
-            ) : (
-                ""
-            )}
+                {board.length !== 60 ? (
+                    <div className="app__bar-text">{text}</div>
+                ) : (
+                    ""
+                )}
+            </div>
         </div>
     );
 };

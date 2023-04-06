@@ -1,7 +1,15 @@
+.app {
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
 .app__row {
     margin: 100px auto 0;
-    max-width: 615px;
+    width: 100%;
     display: grid;
+    grid-auto-columns: 1fr;
+    grid-template-columns: repeat(8, 42.5px);
+    grid-template-rows: repeat(4, auto);
     align-items: center;
     justify-content: center;
     gap: 40px;
@@ -34,8 +42,6 @@
 }
 .app_score-bar {
     overflow: hidden;
-    width: 100%;
-    height: 100%;
     -webkit-appearance: none;
     appearance: none;
     background-color: #d9d9d9;
@@ -51,12 +57,12 @@
     height: 20px;
 }
 .app__bar-text {
-    position: absolute;
-    bottom: -115px;
+    transform: rotate(90deg);
 }
 
-.app__board {
+.app__board-wrapper {
     grid-area: board;
+    margin: 0 auto;
 }
 .board__square {
     border: 1px solid #000;
@@ -72,6 +78,8 @@
     display: flex;
     gap: 15px;
     align-items: center;
+    width: 80%;
+    margin: 0 auto;
 }
 .app__time-bar {
     height: 20px;
