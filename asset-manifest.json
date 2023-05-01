@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/game-clicker/static/css/main.abc39c06.css",
-    "main.js": "/game-clicker/static/js/main.cf267dab.js",
+    "main.css": "/game-clicker/static/css/main.dd91e109.css",
+    "main.js": "/game-clicker/static/js/main.b685c3d2.js",
     "static/media/money.png": "/game-clicker/static/media/money.dc103157c253f1c478ab.png",
     "static/media/click-sound.mp3": "/game-clicker/static/media/click-sound.f9f1bc3d8573b0b56e70.mp3",
     "index.html": "/game-clicker/index.html",
     "static/media/timer.svg": "/game-clicker/static/media/timer.bf5a0d75e385007dfc0b3bf26f2b0a27.svg",
-    "main.abc39c06.css.map": "/game-clicker/static/css/main.abc39c06.css.map",
-    "main.cf267dab.js.map": "/game-clicker/static/js/main.cf267dab.js.map"
+    "main.dd91e109.css.map": "/game-clicker/static/css/main.dd91e109.css.map",
+    "main.b685c3d2.js.map": "/game-clicker/static/js/main.b685c3d2.js.map"
   },
   "entrypoints": [
-    "static/css/main.abc39c06.css",
-    "static/js/main.cf267dab.js"
+    "static/css/main.dd91e109.css",
+    "static/js/main.b685c3d2.js"
   ]
 }
