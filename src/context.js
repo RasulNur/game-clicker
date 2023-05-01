@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
-import Board from "./components/Board";
 import audioVoice from "./audio/click-sound.mp3";
+import axios from "axios";
 const context = createContext();
 
 const ContextProvider = ({ children }) => {
@@ -16,12 +16,16 @@ const ContextProvider = ({ children }) => {
     const [isClicked, setIsClicked] = useState(true);
     const [isHitted, setIsHitted] = useState(false);
     const [winMessage, setWinMessage] = useState(null);
+    const [usersScores, setUsersScores] = useState();
     const [isWin, setIsWin] = useState({
         whoWin: "",
         bool: false,
     });
-    const maxScore = 20;
+    const [addedPoints, setAddedPoints] = useState(10);
+    const [finalScore, setFinalScore] = useState(0);
+    const maxScore = 60;
     let audio = new Audio(audioVoice);
+    const [isTimeOver, setIsTimeOver] = useState(false);
 
     const handleBoardSize = (size) => {
         setBoard(Array(size).fill(""));
@@ -31,10 +35,11 @@ const ContextProvider = ({ children }) => {
         setIsClicked(true);
         setIsHitted(i === randomN.curr);
 
-        if (time >= 1 && isWin.bool === false) {
+        if (time >= 0 && isWin.bool === false) {
             if (i === randomN.curr && !isWin.bool) {
                 audio.play();
                 setScoreUser((prev) => prev + 1);
+                setFinalScore((prev) => prev + addedPoints);
                 setRandomN({ prev: null, curr: null });
                 handleWinDetect();
             } else {
@@ -44,9 +49,66 @@ const ContextProvider = ({ children }) => {
         }
     };
 
+    const handleWinDetect = () => {
+        if (scoreUser === maxScore && scorePC < maxScore) {
+            setIsWin({ whoWin: "User", bool: true });
+            postScore();
+            setIsPlaying(false);
+        } else if (scorePC === maxScore && scoreUser < maxScore) {
+            setIsWin({ whoWin: "PC", bool: true });
+            setIsPlaying(false);
+        } else if (isTimeOver && scorePC > scoreUser) {
+            setIsWin({ whoWin: "PC", bool: true });
+
+            setIsPlaying(false);
+        } else if (isTimeOver && scoreUser > scorePC) {
+            setIsWin({ whoWin: "User", bool: true });
+            postScore();
+            setIsPlaying(false);
+        } else if (isTimeOver && scoreUser === scorePC) {
+            setIsWin({ whoWin: "Draw", bool: true });
+            setIsPlaying(false);
+        }
+    };
+
+    const handleWinMessage = () => {
+        if (isWin.whoWin === "Draw") {
+            setWinMessage(`${isWin.whoWin}. To play again press start`);
+        } else if (isWin.bool) {
+            setTime(0);
+            setWinMessage(`${isWin.whoWin} wins. To play again press start`);
+        }
+    };
+
+    const postScore = () => {
+        const postData = {
+            UserScore: finalScore,
+        };
+        if (isWin.whoWin === "User") {
+            axios
+                .post(
+                    "https://sheet.best/api/sheets/6b681526-2a08-40a6-8161-3a3a2bdc2a38",
+                    postData
+                )
+                .then((res) => {
+                    console.log(res);
+                    getScores();
+                });
+        }
+    };
+
+    const getScores = async () => {
+        const res = await axios.get(
+            "https://sheet.best/api/sheets/6b681526-2a08-40a6-8161-3a3a2bdc2a38"
+        );
+        const filteredScores = res.data.sort((a, b) => {
+            return b.UserScore - a.UserScore;
+        });
+        setUsersScores(filteredScores.slice(0, 10));
+    };
+
     useEffect(() => {
         handleHitClick();
-        handleWinDetect();
         if (isHitted || isClicked) {
             return;
         }
@@ -58,34 +120,48 @@ const ContextProvider = ({ children }) => {
             randomN.curr !== null
         ) {
             setScorePC((prev) => prev + 1);
-            handleWinDetect();
         }
     }, [randomN.curr]);
 
-    const handleWinDetect = () => {
-        if (scoreUser === maxScore && scorePC < maxScore) {
-            setIsWin({ whoWin: "User", bool: true });
-            handleWinMessage();
-            setIsPlaying(false);
-        } else if (scorePC === maxScore && scoreUser < maxScore) {
-            setIsWin({ whoWin: "PC", bool: true });
-            handleWinMessage();
-            setIsPlaying(false);
-        } else if (time <= 0 && scorePC > scoreUser) {
-            setIsWin({ whoWin: "PC", bool: true });
-            handleWinMessage();
-        } else if (time <= 0 && scorePC < scoreUser) {
-            setIsWin({ whoWin: "User", bool: true });
-            handleWinMessage();
+    useEffect(() => {
+        getScores();
+    }, [isWin]);
+
+    useEffect(() => {
+        handleWinDetect();
+        if (time === 0) {
+            setIsTimeOver(true);
+        }
+    }, [time, scoreUser, scorePC]);
+
+    useEffect(() => {
+        handleWinMessage();
+    }, [isWin.bool, isWin.whoWin]);
+
+    const setIntervalRange = (min, max) => {
+        setIntervalMin(min);
+        setIntervalMax(max);
+    };
+
+    const changeLevel = () => {
+        if (time >= 40 && time <= 60) {
+            setIntervalRange(1000, 1500);
+            setAddedPoints(10);
+            handleBoardSize(16);
+        } else if (time < 40 && time >= 20) {
+            setIntervalRange(500, 1200);
+            setAddedPoints(30);
+            handleBoardSize(36);
+        } else {
+            setIntervalRange(400, 1000);
+            setAddedPoints(50);
+            handleBoardSize(60);
         }
     };
 
-    const handleWinMessage = () => {
-        if (isWin && isWin.bool === true) {
-            setTime(0);
-            setWinMessage(`${isWin.whoWin} wins. To play again choose level`);
-        }
-    };
+    useEffect(() => {
+        changeLevel();
+    }, [time]);
 
     return (
         <context.Provider
@@ -98,7 +174,6 @@ const ContextProvider = ({ children }) => {
                 randomN,
                 setRandomN,
                 board,
-                handleBoardSize,
                 scoreUser,
                 setScoreUser,
                 scorePC,
@@ -106,19 +181,18 @@ const ContextProvider = ({ children }) => {
                 setIsWin,
                 boardTimer,
                 setBoardTimer,
-                isClicked,
                 setIsClicked,
-                isHitted,
                 setIsHitted,
                 handleWinDetect,
-                handleWinMessage,
                 winMessage,
                 setWinMessage,
                 maxScore,
                 intervalMin,
-                setIntervalMin,
                 intervalMax,
-                setIntervalMax,
+                setAddedPoints,
+                setIsTimeOver,
+                usersScores,
+                finalScore,
             }}>
             {children}
         </context.Provider>

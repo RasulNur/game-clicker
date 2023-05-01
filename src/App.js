@@ -5,36 +5,64 @@ import TimerIcon from "./icons/timer.svg";
 import TimeBar from "./components/TimeBar";
 import { context } from "./context";
 import ScoreBar from "./components/ScoreBar";
-import Button from "./components/Button";
+
+import ScoreTable from "./components/ScoreTable";
 
 function App() {
-    const { board, scorePC, scoreUser, winMessage, isPlaying, setIsPlaying } =
-        useContext(context);
+    const {
+        board,
+        scorePC,
+        scoreUser,
+        winMessage,
+        setIsPlaying,
+        setTime,
+        setIsHitted,
+        setIsClicked,
+        setIsWin,
+        setScorePC,
+        setScoreUser,
+        setRandomN,
+        setWinMessage,
+        setIsTimeOver,
+        finalScore,
+    } = useContext(context);
 
     const rowStyles = {
         gridTemplateAreas: `
 		". . . start-btn start-btn . . ."
-		". btns btns btns btns btns btns ."
-		". p-bar board board board board pc-bar ."
+		". stats stats stats stats stats stats ."
+		". board board board board board board ."
 		". time-bar time-bar time-bar time-bar time-bar time-bar ."`,
     };
     const rowStyles36 = {
         gridTemplateAreas: `
 		". . . start-btn start-btn . . ."
-				". btns btns btns btns btns btns ."
-				"p-bar board board board board board board pc-bar"
+				". stats stats stats stats stats stats ."
+				". board board board board board board ."
 				". time-bar time-bar time-bar time-bar time-bar time-bar ."`,
     };
 
     const rowStyles60 = {
         gridTemplateAreas: `". . . start-btn start-btn . . ."
-				"p-bar p-bar btns btns btns btns pc-bar pc-bar"
-				"board  board board board board  board board board"
-				"time-bar time-bar time-bar time-bar time-bar time-bar time-bar time-bar"`,
+				". stats stats stats stats stats stats ."
+				"board board board board board board board board"
+				". time-bar time-bar time-bar time-bar time-bar time-bar ."`,
     };
 
     const handlePlay = () => {
-        setIsPlaying(true);
+        setIsPlaying(false);
+        setTime(60);
+        setIsHitted(false);
+        setIsClicked(false);
+        setIsWin({ whoWin: "", bool: false });
+        setScorePC(0);
+        setScoreUser(0);
+        setRandomN({ prev: null, curr: null });
+        setWinMessage(null);
+        setIsTimeOver(false);
+        setTimeout(() => {
+            setIsPlaying(true);
+        }, 1);
     };
 
     return (
@@ -51,17 +79,18 @@ function App() {
                 <button className="app__start-btn" onClick={handlePlay}>
                     Start
                 </button>
-                <div className="app__btns">
-                    <Button boardSize={16} text={"Easy"} />
-                    <Button boardSize={36} text={"Medium"} />
-                    <Button boardSize={60} text={"Hard"} />
+                <div className="app__user-stats">
+                    <ScoreBar
+                        score={scoreUser}
+                        text={"You"}
+                        color={"#b4ffb2"}
+                    />
+                    <div className="app__final-score">{finalScore}</div>
+                    <ScoreBar score={scorePC} text={"PC"} color={"#ff8989"} />
                 </div>
-
-                <ScoreBar score={scoreUser} text={"You"} color={"#b4ffb2"} />
                 <div className="app__board-wrapper">
                     <Board />
                 </div>
-                <ScoreBar score={scorePC} text={"PC"} color={"#ff8989"} />
 
                 <div className="app__timer-bar-wrapper">
                     <img
@@ -76,6 +105,8 @@ function App() {
             <div style={{ textAlign: "center", marginTop: "25px" }}>
                 {winMessage && winMessage}
             </div>
+
+            <ScoreTable />
         </div>
     );
 }

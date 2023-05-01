@@ -24,8 +24,11 @@ const Board = () => {
         display: "grid",
         gridTemplateColumns: `repeat(${
             board.length === 16 ? 4 : board.length === 36 ? 6 : 10
-        }, minmax(60px, 65px))`,
-        gridTemplateRows: `repeat(${board.length === 16 ? 4 : 6}, 60px)`,
+        }, minmax(${board.length === 16 ? "90px, 97.5px" : "60px, 65px"}))`,
+
+        gridTemplateRows: `repeat(${board.length === 16 ? 4 : 6}, ${
+            board.length === 16 ? "90px" : "60px"
+        })`,
     };
 
     const handleRandomPostion = () => {
@@ -41,26 +44,29 @@ const Board = () => {
     };
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            handleWinDetect();
-            handleRandomTime();
-
-            if (isPlaying) {
-                setIsClicked(false);
-                setRandomN((prev) => ({
-                    prev: prev.curr,
-                    curr: handleRandomPostion(),
-                }));
-
+        let interval;
+        if (isPlaying) {
+            interval = setInterval(() => {
                 handleWinDetect();
-                console.log(boardTimer);
-            } else {
-                setRandomN({ prev: null, curr: null });
-                clearInterval(interval);
-                setScorePC(0);
-                setScoreUser(0);
-            }
-        }, boardTimer);
+                handleRandomTime();
+
+                if (isPlaying) {
+                    setIsClicked(false);
+                    setRandomN((prev) => ({
+                        prev: prev.curr,
+                        curr: handleRandomPostion(),
+                    }));
+
+                    handleWinDetect();
+                } else {
+                    setRandomN({ prev: null, curr: null });
+                    clearInterval(interval);
+                    setScorePC(0);
+                    setScoreUser(0);
+                }
+            }, boardTimer);
+        }
+
         return () => {
             clearInterval(interval);
         };
@@ -68,7 +74,7 @@ const Board = () => {
 
     return (
         <div className="app__board board" style={boardStyles}>
-            {board.map((el, i) => {
+            {board.map((_, i) => {
                 return (
                     <button
                         className="board__square"
@@ -79,6 +85,20 @@ const Board = () => {
                             <img
                                 className="app__money-icon"
                                 src={MoneyIcon}
+                                style={{
+                                    width: `${
+                                        board.length === 16 ? "60px" : "40px"
+                                    }`,
+                                    height: `${
+                                        board.length === 16 ? "60px" : "40px"
+                                    }`,
+                                    padding: `${
+                                        board.length === 16
+                                            ? "15px 20px"
+                                            : "10px"
+                                    }`,
+                                }}
+                                draggable={false}
                                 alt="Money icom"
                             />
                         ) : (

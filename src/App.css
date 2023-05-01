@@ -22,42 +22,28 @@
     cursor: pointer;
 }
 
-.app__btns {
-    grid-area: btns;
+.app__user-stats {
     display: flex;
-    gap: 15px;
-    justify-self: center;
-}
-.app__btn {
-    border: none;
-    padding: 5px 20px;
-    cursor: pointer;
+    justify-content: space-between;
+    align-items: center;
+    grid-area: stats;
 }
 
-.app__player-bar {
-    grid-area: p-bar;
-}
-.app__bar-wrapper {
-    position: relative;
-}
-.app_score-bar {
+.app__score-bar {
     overflow: hidden;
     -webkit-appearance: none;
     appearance: none;
     background-color: #d9d9d9;
 }
-.app_score-bar::-webkit-slider-runnable-track {
+.app__score-bar::-webkit-slider-runnable-track {
     height: 20px;
     -webkit-appearance: none;
     margin-top: -1px;
 }
-.app_score-bar::-webkit-slider-thumb {
+.app__score-bar::-webkit-slider-thumb {
     width: 1px;
     -webkit-appearance: none;
     height: 20px;
-}
-.app__bar-text {
-    transform: rotate(90deg);
 }
 
 .app__board-wrapper {
@@ -65,6 +51,9 @@
     margin: 0 auto;
 }
 .board__square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: 1px solid #000;
     background-color: #d9d9d9;
 }
@@ -90,8 +79,7 @@
     height: 20px;
 }
 .app__money-icon {
-    width: 40px;
-    height: 40px;
+    user-select: none;
 }
 .app__time-bar input[type="range"] {
     overflow: hidden;
@@ -110,4 +98,18 @@
     width: 1px;
     -webkit-appearance: none;
     height: 20px;
+}
+
+.app__score-list-wrapper {
+    width: max-content;
+    margin: 0 auto;
+}
+.app__score-list {
+    padding: 0;
+    list-style-position: inside;
+}
+
+.app__score-list-item {
+    border: 1px solid black;
+    padding: 10px 20px;
 }
