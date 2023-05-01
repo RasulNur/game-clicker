@@ -25,6 +25,7 @@ function App() {
         setWinMessage,
         setIsTimeOver,
         finalScore,
+        setFinalScore,
     } = useContext(context);
 
     const rowStyles = {
@@ -60,6 +61,7 @@ function App() {
         setRandomN({ prev: null, curr: null });
         setWinMessage(null);
         setIsTimeOver(false);
+        setFinalScore(0);
         setTimeout(() => {
             setIsPlaying(true);
         }, 1);

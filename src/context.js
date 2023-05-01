@@ -59,7 +59,6 @@ const ContextProvider = ({ children }) => {
             setIsPlaying(false);
         } else if (isTimeOver && scorePC > scoreUser) {
             setIsWin({ whoWin: "PC", bool: true });
-
             setIsPlaying(false);
         } else if (isTimeOver && scoreUser > scorePC) {
             setIsWin({ whoWin: "User", bool: true });
@@ -193,6 +192,7 @@ const ContextProvider = ({ children }) => {
                 setIsTimeOver,
                 usersScores,
                 finalScore,
+                setFinalScore,
             }}>
             {children}
         </context.Provider>
