@@ -79,18 +79,34 @@ const ContextProvider = ({ children }) => {
         }
     };
 
-    const postScore = () => {
-        const postData = {
-            UserScore: finalScore,
-        };
+    const postScore = async () => {
+        const res = await axios.get(
+            "https://sheet.best/api/sheets/6b681526-2a08-40a6-8161-3a3a2bdc2a38"
+        );
+
+        const filteredScores = res.data
+            .sort((a, b) => {
+                return b.UserScore - a.UserScore;
+            })
+            .slice(0, 10);
+
         if (isWin.whoWin === "User") {
             axios
                 .post(
                     "https://sheet.best/api/sheets/6b681526-2a08-40a6-8161-3a3a2bdc2a38",
-                    postData
+                    finalScore > filteredScores[9].UserScore
+                        ? {
+                              UserScore: finalScore,
+                              UserName: prompt(
+                                  "You're in the top 10. Enter your name",
+                                  "Unknown"
+                              ),
+                          }
+                        : {
+                              UserScore: finalScore,
+                          }
                 )
-                .then((res) => {
-                    console.log(res);
+                .then(() => {
                     getScores();
                 });
         }

@@ -113,3 +113,7 @@
     border: 1px solid black;
     padding: 10px 20px;
 }
+
+.app__score-list-heading {
+    text-align: center;
+}

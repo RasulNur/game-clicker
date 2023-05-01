@@ -12,7 +12,7 @@ export default function ScoreTable() {
                     ? usersScores.map((el, id) => {
                           return (
                               <li className="app__score-list-item" key={id}>
-                                  {el.UserScore}
+                                  {el.UserName} - {el.UserScore}
                               </li>
                           );
                       })
