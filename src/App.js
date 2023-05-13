@@ -87,7 +87,10 @@ function App() {
                         text={"You"}
                         color={"#b4ffb2"}
                     />
-                    <div className="app__final-score">{finalScore}</div>
+                    <div className="app__final-score">
+                        <div style={{ visibility: "hidden" }}>1</div>
+                        <p>{finalScore}</p>
+                    </div>
                     <ScoreBar score={scorePC} text={"PC"} color={"#ff8989"} />
                 </div>
                 <div className="app__board-wrapper">

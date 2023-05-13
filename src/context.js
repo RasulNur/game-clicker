@@ -100,7 +100,7 @@ const ContextProvider = ({ children }) => {
                               UserName: prompt(
                                   "You're in the top 10. Enter your name",
                                   "Unknown"
-                              ),
+                              ).substring(0, 20),
                           }
                         : {
                               UserScore: finalScore,

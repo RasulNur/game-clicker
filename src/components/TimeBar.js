@@ -8,6 +8,7 @@ const Input = styled.input.attrs((props) => ({
     max: 60,
     value: props.time,
     disabled: true,
+    className: "time-bar__input",
 }))`
     &::-webkit-slider-thumb {
         box-shadow: -500px 0 0 500px
