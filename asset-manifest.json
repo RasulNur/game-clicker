@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/game-clicker/static/css/main.99b3bd0a.css",
+    "main.js": "/game-clicker/static/js/main.9b478ad4.js",
+    "static/media/money.png": "/game-clicker/static/media/money.dc103157c253f1c478ab.png",
+    "static/media/click-sound.mp3": "/game-clicker/static/media/click-sound.f9f1bc3d8573b0b56e70.mp3",
+    "index.html": "/game-clicker/index.html",
+    "static/media/timer.svg": "/game-clicker/static/media/timer.bf5a0d75e385007dfc0b3bf26f2b0a27.svg",
+    "main.99b3bd0a.css.map": "/game-clicker/static/css/main.99b3bd0a.css.map",
+    "main.9b478ad4.js.map": "/game-clicker/static/js/main.9b478ad4.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.99b3bd0a.css",
+    "static/js/main.9b478ad4.js"
+  ]
+}
