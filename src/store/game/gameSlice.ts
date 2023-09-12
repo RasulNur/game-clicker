@@ -59,31 +59,6 @@ export const gameSlice = createSlice({
         setAddedPoints: (state, action: PayloadAction<number>) => {
             state.addedPoints = action.payload;
         },
-        // handleBoardSize: (state, action: PayloadAction<number>) => {
-        //     console.log(action);
-
-        //     setBoard(Array(action.payload).fill(""));
-        // },
-        // setIntervalRange: (state, action: PayloadAction<number[]>) => {
-        //     console.log(action);
-        //     setIntervalMin(action.payload[0]);
-        //     setIntervalMax(action.payload[1]);
-        // },
-        // changeLevel: (state) => {
-        //     if (state.time >= 40 && state.time <= 60) {
-        //         setIntervalRange([1000, 1500]);
-        //         setAddedPoints(10);
-        //         handleBoardSize(16);
-        //     } else if (state.time < 40 && state.time >= 20) {
-        //         setIntervalRange([500, 1200]);
-        //         setAddedPoints(30);
-        //         handleBoardSize(36);
-        //     } else {
-        //         setIntervalRange([400, 1000]);
-        //         setAddedPoints(50);
-        //         handleBoardSize(60);
-        //     }
-        // },
     },
     extraReducers: (builder) => {},
 });
@@ -99,8 +74,5 @@ export const {
     setIsClicked,
     setUsersScores,
     setAddedPoints,
-    // handleBoardSize,
-    // changeLevel,
-    // setIntervalRange,
 } = gameSlice.actions;
 export default gameSlice.reducer;

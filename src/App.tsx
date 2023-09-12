@@ -94,52 +94,6 @@ const App: FC = () => {
         }
     };
 
-    // const postScore = async () => {
-    //     // const filteredScores = await fetchScores();
-    //     const res = await axios.get<IUserScore[]>(
-    //         "https://sheet.best/api/sheets/6f587796-9494-4570-9b9b-8674887b2eef"
-    //     );
-    //     const filteredScores = res.data
-    //         .sort((a, b) => {
-    //             return b.UserScore - a.UserScore;
-    //         })
-    //         .slice(0, 10);
-
-    //     if (isWin.whoWin === "User") {
-    //         axios
-    //             .post(
-    //                 "https://sheet.best/api/sheets/6f587796-9494-4570-9b9b-8674887b2eef",
-    //                 finalScore >
-    //                     filteredScores[filteredScores.length].UserScore ||
-    //                     filteredScores.length < 10
-    //                     ? {
-    //                           UserScore: finalScore,
-    //                           UserName: prompt(
-    //                               "You're in the top 10. Enter your name",
-    //                               "Super unknown username"
-    //                           )!.substring(0, 20),
-    //                       }
-    //                     : {
-    //                           UserScore: finalScore,
-    //                       }
-    //             )
-    //             .then(() => {
-    //                 getScores();
-    //             });
-    //     }
-    // };
-
-    // const getScores = async () => {
-    //     const res = await axios.get<IUserScore[]>(
-    //         "https://sheet.best/api/sheets/6f587796-9494-4570-9b9b-8674887b2eef"
-    //     );
-    //     const filteredScores = res.data.sort((a, b) => {
-    //         return b.UserScore - a.UserScore;
-    //     });
-
-    //     dispatch(setUsersScores(filteredScores.slice(0, 10)));
-    // };
-
     const postScore = async () => {
         const res = await axios.get<IUserScore[]>(
             "https://sheet.best/api/sheets/6f587796-9494-4570-9b9b-8674887b2eef"
